@@ -840,7 +840,7 @@ process_tor_interface(){
 				ipt -t nat -N "VPR_${i}"
 				ipt -t nat "$insertOption" "$i" -m mark --mark "0x0/${fwMask}" -j "VPR_${i}"
 			done
-			if ips 'create' "${iface}" 'hash:net comment' && ips 'flush' "${iface}"; then
+			if ips 'create' "${iface}" 'hash:net comment maxelem 131072' && ips 'flush' "${iface}"; then
 				for i in $usedChainsList; do
 					ipt -t nat -I "VPR_${i}" -p udp -m udp --dport 53 -m set --match-set "${iface}" dst -j REDIRECT --to-ports "$dnsPort" -m comment --comment "TorDNS-UDP" || s=1
 					ipt -t nat -I "VPR_${i}" -p tcp -m tcp --dport 80 -m set --match-set "${iface}" dst -j REDIRECT --to-ports "$transPort" -m comment --comment "TorHTTP-TCP" || s=1
