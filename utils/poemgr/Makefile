@@ -24,7 +24,7 @@ define Package/poemgr
 endef
 
 define Package/poemgr/conffiles
-/etc/config/usteer
+/etc/config/poemgr
 endef
 
 define Package/poemgr/install
